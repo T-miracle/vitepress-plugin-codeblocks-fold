@@ -4,7 +4,7 @@
 
 EN | [中文文档](README_zh.md)
 
-![]()
+![](./demo.webp)
 
 > Add collapse to vitepress codeblocks
 

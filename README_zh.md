@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/vitepress-plugin-codeblocks-fold?color=green)](https://www.npmjs.com/package/vitepress-plugin-codeblocks-fold)
 
-![]()
+![](./demo.webp)
 
 > 给 vitepress 代码块添加折叠功能
 
