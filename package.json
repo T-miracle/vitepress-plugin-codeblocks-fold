@@ -1,0 +1,24 @@
+{
+  "name": "vitepress-plugin-codeblocks-fold",
+  "version": "1.0.2",
+  "description": "",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib",
+    "style"
+  ],
+  "keywords": [
+    "vitepress",
+    "vitepress-plugin",
+    "code-blocks",
+    "fold"
+  ],
+  "author": "T-miracle",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.0.0-alpha.65",
+    "vue": "^3.2.47"
+  }
+}
