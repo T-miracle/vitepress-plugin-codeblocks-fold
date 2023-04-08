@@ -1,7 +1,7 @@
 {
   "name": "vitepress-plugin-codeblocks-fold",
   "version": "1.0.2",
-  "description": "",
+  "description": "Add collapse to vitepress codeblocks",
   "type": "module",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -15,6 +15,10 @@
     "code-blocks",
     "fold"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/T-miracle/vitepress-plugin-codeblocks-fold.git"
+  },
   "author": "T-miracle",
   "license": "MIT",
   "devDependencies": {
