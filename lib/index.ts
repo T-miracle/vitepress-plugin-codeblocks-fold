@@ -30,19 +30,16 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
         if (Array.isArray(fm)) { // 如果是数组
             if (defaultAllFold) {
                 if (fm.indexOf(index + 1) === -1) {
-                    observer(element, height);
-                    fold(element, height);
+                    judge(element, height);
                 }
             } else {
                 if (fm.indexOf(index + 1) !== -1) {
-                    observer(element, height);
-                    fold(element, height);
+                    judge(element, height);
                 }
             }
         } else { // 如果是布尔值
             if (defaultAllFold) {
-                observer(element, height);
-                fold(element, height);
+                judge(element, height);
             }
         }
     });
@@ -57,7 +54,8 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
 const observer = (el: HTMLElement, height: number) => {
     new MutationObserver((mutations, observer) => {
         mutations.forEach((mutation) => {
-            if (mutation.attributeName === 'class' && (mutation.target as HTMLElement).classList.contains('active')) {
+            const _el = mutation.target as HTMLElement;
+            if (mutation.attributeName === 'class' && _el.classList.contains('active') && _el.offsetHeight > height) {
                 fold(el, height);
             }
         });
@@ -67,14 +65,28 @@ const observer = (el: HTMLElement, height: number) => {
 };
 
 /**
+ * 判断是否是代码块组中未显示的代码块
+ * @param el 元素
+ * @param height 高度
+ */
+const judge = (el: HTMLElement, height: number) => {
+    if (el.querySelector('.fold-btn')) {
+        return;
+    }
+    const displayStatus = window.getComputedStyle(el, null).getPropertyValue('display');
+    if (displayStatus) {
+        observer(el, height);
+    } else {
+        fold(el, height);
+    }
+};
+
+/**
  * 折叠与展开
  * @param el 代码块元素
  * @param height 限制高度
  */
 const fold = (el: HTMLElement, height: number) => {
-    if (el.querySelector('.fold-btn')) {
-        return;
-    }
     const pre = el.querySelector('pre');
     pre!.style.height = height + 'px';
     pre!.style.overflow = 'hidden';
