@@ -73,8 +73,8 @@ const judge = (el: HTMLElement, height: number) => {
     if (el.querySelector('.fold-btn')) {
         return;
     }
-    const displayStatus = window.getComputedStyle(el, null).getPropertyValue('display');
-    if (displayStatus) {
+    const displayStatus: string = window.getComputedStyle(el, null).getPropertyValue('display');
+    if (displayStatus === 'none') {
         observer(el, height);
     } else {
         fold(el, height);
