@@ -5,8 +5,10 @@ export default defineConfig({
     title: 'test',
     // 主题配置
     themeConfig: {
-        sidebar: {
-
-        }
+        sidebar: [
+            {text: 'index', link : '/index.md'},
+            {text: 'test', link : '/test.md'},
+            {text: 'eee', link : '/eee.md'},
+        ]
     }
 });

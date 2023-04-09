@@ -70,9 +70,6 @@ const observer = (el: HTMLElement, height: number) => {
  * @param height 高度
  */
 const judge = (el: HTMLElement, height: number) => {
-    if (el.querySelector('.fold-btn')) {
-        return;
-    }
     const displayStatus: string = window.getComputedStyle(el, null).getPropertyValue('display');
     if (displayStatus === 'none') {
         observer(el, height);
@@ -87,6 +84,12 @@ const judge = (el: HTMLElement, height: number) => {
  * @param height 限制高度
  */
 const fold = (el: HTMLElement, height: number) => {
+    // 先移除旧 DOM
+    const oldFoldBtn = el.querySelector('.fold-btn')
+    const oldMask = el.querySelector('.codeblocks-mask')
+    oldFoldBtn && el.removeChild(oldFoldBtn)
+    oldMask && el.removeChild(oldMask)
+
     const pre = el.querySelector('pre');
     pre!.style.height = height + 'px';
     pre!.style.overflow = 'hidden';
@@ -117,6 +120,7 @@ const fold = (el: HTMLElement, height: number) => {
     el.appendChild(mask);
     el.appendChild(foldBtn);
 };
+
 
 /**
  * Set codeblocks folding.  设置代码块折叠
