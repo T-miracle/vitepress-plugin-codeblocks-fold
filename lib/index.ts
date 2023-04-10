@@ -56,6 +56,7 @@ const observer = (el: HTMLElement, height: number) => {
         mutations.forEach((mutation) => {
             const _el = mutation.target as HTMLElement;
             if (mutation.attributeName === 'class' && _el.classList.contains('active') && _el.offsetHeight > height) {
+                console.log('触发 MutationObserver ...');
                 fold(el, height);
             }
         });
@@ -84,9 +85,11 @@ const judge = (el: HTMLElement, height: number) => {
  * @param height 限制高度
  */
 const fold = (el: HTMLElement, height: number) => {
+    console.log('进入折叠方法...');
     if (el.classList.contains('fold')) {
         return;
     }
+    console.log('执行折叠方法...');
     el.classList.add('fold');
     const pre = el.querySelector('pre');
     pre!.style.height = height + 'px';
@@ -134,6 +137,7 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
     watch(() => route.path, () => {
         console.log('route change...', route.path);
         nextTick(() => {
+            console.log('nextTick...');
             cbf(vitepressObj.frontmatter, defaultAllFold, height);
         }).then();
     });
