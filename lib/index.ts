@@ -134,7 +134,8 @@ const addBtnListener = (height: number) => {
         const foldBtn = el.querySelector('.fold-btn') as HTMLElement;
         const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
         const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
-        el.addEventListener('click', () => {
+        console.log('add event...');
+        foldBtn.addEventListener('click', () => {
             foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
         });
     });
