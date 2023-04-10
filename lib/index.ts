@@ -84,12 +84,10 @@ const judge = (el: HTMLElement, height: number) => {
  * @param height 限制高度
  */
 const fold = (el: HTMLElement, height: number) => {
-    // 先移除旧 DOM
-    const oldFoldBtn = el.querySelector('.fold-btn')
-    const oldMask = el.querySelector('.codeblocks-mask')
-    oldFoldBtn && el.removeChild(oldFoldBtn)
-    oldMask && el.removeChild(oldMask)
-
+    if (el.classList.contains('fold')) {
+        return;
+    }
+    el.classList.add('fold');
     const pre = el.querySelector('pre');
     pre!.style.height = height + 'px';
     pre!.style.overflow = 'hidden';
