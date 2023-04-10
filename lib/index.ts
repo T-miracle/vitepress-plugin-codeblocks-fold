@@ -91,9 +91,9 @@ const fold = (el: HTMLElement, height: number) => {
     }
     console.log('执行折叠方法...');
     el.classList.add('fold');
-    const pre = el.querySelector('pre');
-    pre!.style.height = height + 'px';
-    pre!.style.overflow = 'hidden';
+    const pre = el.querySelector('pre')!;
+    pre.style.height = height + 'px';
+    pre.style.overflow = 'hidden';
     el.style.borderRadius = '8px 8px 0 0';
     const foldBtn = document.createElement('div');
     const mask = document.createElement('div');
@@ -103,25 +103,42 @@ const fold = (el: HTMLElement, height: number) => {
     foldBtn.addEventListener('click', () => {
         const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
         const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
-        if (pre!.classList.contains('expand')) { // 折叠
-            const oldPos = foldBtn.getBoundingClientRect().top;
-            pre!.style.height = height + 'px';
-            pre!.classList.remove('expand');
-            maskElement.style.height = '48px';
-            iconElement.classList.remove('turn');
-            // 保持按钮位置并滚动页面
-            window.scrollTo(0, foldBtn.getBoundingClientRect().top + window.scrollY - oldPos);
-        } else { // 展开
-            pre!.style.height = 'auto';
-            pre!.classList.add('expand');
-            maskElement.style.height = '20px';
-            iconElement.classList.add('turn');
-        }
+        foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
     });
     el.appendChild(mask);
     el.appendChild(foldBtn);
 };
 
+const foldBtnEvent = (els: { pre: HTMLElement, foldBtn: HTMLElement, iconElement: HTMLElement, maskElement: HTMLElement }, height: number) => {
+    const { pre, foldBtn, iconElement, maskElement } = els;
+    if (pre!.classList.contains('expand')) { // 折叠
+        const oldPos = foldBtn.getBoundingClientRect().top;
+        pre!.style.height = height + 'px';
+        pre!.classList.remove('expand');
+        maskElement.style.height = '48px';
+        iconElement.classList.remove('turn');
+        // 保持按钮位置并滚动页面
+        window.scrollTo(0, foldBtn.getBoundingClientRect().top + window.scrollY - oldPos);
+    } else { // 展开
+        pre!.style.height = 'auto';
+        pre!.classList.add('expand');
+        maskElement.style.height = '20px';
+        iconElement.classList.add('turn');
+    }
+};
+
+const addBtnListener = (height: number) => {
+    const cbs = document.querySelectorAll('.vp-doc [class*="language-"]');
+    cbs.forEach((el: Element) => {
+        const pre = el.querySelector('pre') as HTMLElement;
+        const foldBtn = el.querySelector('.fold-btn') as HTMLElement;
+        const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
+        const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
+        el.addEventListener('click', () => {
+            foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
+        });
+    });
+};
 
 /**
  * Set codeblocks folding.  设置代码块折叠
@@ -139,6 +156,7 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
         nextTick(() => {
             console.log('nextTick...');
             cbf(vitepressObj.frontmatter, defaultAllFold, height);
+            addBtnListener(height);
         }).then();
     });
 };
