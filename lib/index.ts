@@ -127,12 +127,16 @@ const fold = (el: HTMLElement, height: number) => {
  * @param height The height of the folded codeblocks（default 400px）.  折叠后的代码块高度（默认 400px）
  */
 const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = true, height: number = 400) => {
+    const { frontmatter, route } = vitepressObj;
     onMounted(() => {
-        cbf(vitepressObj.frontmatter, defaultAllFold, height);
+        cbf(frontmatter, defaultAllFold, height);
     });
-    watch(() => vitepressObj.route.path, () => nextTick(() => {
-        cbf(vitepressObj.frontmatter, defaultAllFold, height);
-    }));
+    watch(() => route.path, () => {
+        console.log('route change...', route.path);
+        nextTick(() => {
+            cbf(vitepressObj.frontmatter, defaultAllFold, height);
+        }).then();
+    });
 };
 
 export default codeblocksFold;
