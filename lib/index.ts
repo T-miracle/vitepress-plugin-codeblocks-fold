@@ -24,6 +24,12 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
     // 遍历给代码块添加折叠
     codeblocks.forEach((el: Element, index: number) => {
         const element = el as HTMLElement;
+        // 移除旧元素
+        const oldFoldBtn = element.querySelector('.fold-btn');
+        const oldMask = element.querySelector('.codeblocks-mask');
+        oldFoldBtn && element.removeChild(oldFoldBtn);
+        oldMask && element.removeChild(oldMask);
+
         if (element.offsetHeight !== 0 && element.offsetHeight <= height) {
             return;
         }
@@ -56,7 +62,6 @@ const observer = (el: HTMLElement, height: number) => {
         mutations.forEach((mutation) => {
             const _el = mutation.target as HTMLElement;
             if (mutation.attributeName === 'class' && _el.classList.contains('active') && _el.offsetHeight > height) {
-                console.log('触发 MutationObserver ...');
                 fold(el, height);
             }
         });
@@ -85,12 +90,10 @@ const judge = (el: HTMLElement, height: number) => {
  * @param height 限制高度
  */
 const fold = (el: HTMLElement, height: number) => {
-    console.log('进入折叠方法...');
-    if (el.classList.contains('fold')) {
+    if (el.querySelector('.fold-btn')) {
         return;
     }
-    console.log('执行折叠方法...');
-    el.classList.add('fold');
+    console.log('生成折叠...');
     const pre = el.querySelector('pre')!;
     pre.style.height = height + 'px';
     pre.style.overflow = 'hidden';
@@ -100,15 +103,21 @@ const fold = (el: HTMLElement, height: number) => {
     mask.className = 'codeblocks-mask';
     foldBtn.className = 'fold-btn';
     foldBtn.insertAdjacentHTML('afterbegin', `<svg t="1680893932803" class="fold-btn-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1473" width="16" height="16"><path d="M553.1392 778.88512l451.61472-451.61472c22.64576-22.64576 22.64576-59.4176 0-82.14016-22.64576-22.64576-59.4176-22.64576-82.14016 0l-410.5472 410.61888-410.61888-410.624c-22.64576-22.64576-59.4176-22.64576-82.14016 0-22.64576 22.64576-22.64576 59.4176 0 82.14016l451.69152 451.69152a58.08128 58.08128 0 0 0 82.14016-0.07168z" p-id="1474"></path></svg>`);
+    el.appendChild(mask);
+    el.appendChild(foldBtn);
+    // 添加折叠事件
     foldBtn.addEventListener('click', () => {
         const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
         const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
         foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
     });
-    el.appendChild(mask);
-    el.appendChild(foldBtn);
 };
 
+/**
+ * 折叠事件
+ * @param els 元素对象
+ * @param height 高度
+ */
 const foldBtnEvent = (els: { pre: HTMLElement, foldBtn: HTMLElement, iconElement: HTMLElement, maskElement: HTMLElement }, height: number) => {
     const { pre, foldBtn, iconElement, maskElement } = els;
     if (pre!.classList.contains('expand')) { // 折叠
@@ -127,23 +136,6 @@ const foldBtnEvent = (els: { pre: HTMLElement, foldBtn: HTMLElement, iconElement
     }
 };
 
-const addBtnListener = (height: number) => {
-    const cbs = document.querySelectorAll('.vp-doc [class*="language-"]');
-    cbs.forEach((el: Element) => {
-        const pre = el.querySelector('pre') as HTMLElement;
-        const foldBtn = el.querySelector('.fold-btn') as HTMLElement;
-        const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
-        const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
-        console.log('add event...');
-        foldBtn.removeEventListener('click', () => {
-            foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
-        })
-        foldBtn.addEventListener('click', () => {
-            foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
-        });
-    });
-};
-
 /**
  * Set codeblocks folding.  设置代码块折叠
  * @param vitepressObj route and frontmatter.  路由与前言
@@ -156,11 +148,8 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
         cbf(frontmatter, defaultAllFold, height);
     });
     watch(() => route.path, () => {
-        console.log('route change...', route.path);
         nextTick(() => {
-            console.log('nextTick...');
             cbf(vitepressObj.frontmatter, defaultAllFold, height);
-            addBtnListener(height);
         }).then();
     });
 };
