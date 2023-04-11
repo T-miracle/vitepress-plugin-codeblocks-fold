@@ -98,10 +98,13 @@ const fold = (el: HTMLElement, height: number) => {
     foldBtn.className = 'fold-btn';
     foldBtn.insertAdjacentHTML('afterbegin', `<svg t="1680893932803" class="fold-btn-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1473" width="16" height="16"><path d="M553.1392 778.88512l451.61472-451.61472c22.64576-22.64576 22.64576-59.4176 0-82.14016-22.64576-22.64576-59.4176-22.64576-82.14016 0l-410.5472 410.61888-410.61888-410.624c-22.64576-22.64576-59.4176-22.64576-82.14016 0-22.64576 22.64576-22.64576 59.4176 0 82.14016l451.69152 451.69152a58.08128 58.08128 0 0 0 82.14016-0.07168z" p-id="1474"></path></svg>`);
     el.appendChild(mask);
-    const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
-    const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
-    foldBtn.onclick = () => foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
     el.appendChild(foldBtn);
+    // 添加折叠事件
+    foldBtn.addEventListener('click', () => {
+        const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
+        const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
+        foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
+    });
 };
 
 /**
@@ -129,9 +132,18 @@ const foldBtnEvent = (els: { pre: HTMLElement, foldBtn: HTMLElement, iconElement
 
 const rebindListener = (height: number) => {
     console.log('重新绑定监听...')
-    const foldButtons = document.querySelectorAll('.fold-btn');
-    foldButtons.forEach(el => {
-        const btn = el as HTMLElement;
+    const codeblocks = document.querySelectorAll('.vp-doc [class*="language-"]');
+    codeblocks.forEach(el => {
+        const foldBtn = el.querySelector('.fold-btn') as HTMLElement;
+        console.log(`--->`, foldBtn.onclick)
+        if(foldBtn.onclick) {
+            foldBtn.addEventListener('click', () => {
+                const pre = el.querySelector('pre') as HTMLElement;
+                const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
+                const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
+                foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
+            })
+        }
     })
 }
 
@@ -145,10 +157,12 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
     const { frontmatter, route } = vitepressObj;
     onMounted(() => {
         cbf(frontmatter, defaultAllFold, height);
+        rebindListener(height);
     });
     watch(() => route.path, () => {
         nextTick(() => {
             cbf(vitepressObj.frontmatter, defaultAllFold, height);
+            rebindListener(height);
         }).then();
     });
 };
