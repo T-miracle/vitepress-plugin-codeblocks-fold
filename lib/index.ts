@@ -100,11 +100,11 @@ const fold = (el: HTMLElement, height: number) => {
     el.appendChild(mask);
     el.appendChild(foldBtn);
     // 添加折叠事件
-    foldBtn.addEventListener('click', () => {
+    foldBtn.onclick = () => {
         const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
         const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
         foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
-    });
+    }
 };
 
 /**
@@ -135,14 +135,14 @@ const rebindListener = (height: number) => {
     const codeblocks = document.querySelectorAll('.vp-doc [class*="language-"]');
     codeblocks.forEach(el => {
         const foldBtn = el.querySelector('.fold-btn') as HTMLElement;
-        console.log(`--->`, foldBtn.onclick)
-        if(foldBtn.onclick) {
-            foldBtn.addEventListener('click', () => {
+        console.log(`--->`, foldBtn?.onclick)
+        if(foldBtn && !foldBtn.onclick) {
+            foldBtn.onclick=  () => {
                 const pre = el.querySelector('pre') as HTMLElement;
                 const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
                 const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
                 foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
-            })
+            }
         }
     })
 }
