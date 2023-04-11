@@ -87,7 +87,7 @@ const fold = (el: HTMLElement, height: number) => {
     if (el.querySelector('.fold-btn')) {
         return;
     }
-    console.log('生成折叠...');
+    // console.log('生成折叠...');
     const pre = el.querySelector('pre')!;
     pre.style.height = height + 'px';
     pre.style.overflow = 'hidden';
@@ -131,11 +131,11 @@ const foldBtnEvent = (els: { pre: HTMLElement, foldBtn: HTMLElement, iconElement
 };
 
 const rebindListener = (height: number) => {
-    console.log('重新绑定监听...')
+    // console.log('重新绑定监听...')
     const codeblocks = document.querySelectorAll('.vp-doc [class*="language-"]');
     codeblocks.forEach(el => {
         const foldBtn = el.querySelector('.fold-btn') as HTMLElement;
-        console.log(`--->`, foldBtn?.onclick)
+        // console.log(`--->`, foldBtn?.onclick)
         if(foldBtn && !foldBtn.onclick) {
             foldBtn.onclick=  () => {
                 const pre = el.querySelector('pre') as HTMLElement;
