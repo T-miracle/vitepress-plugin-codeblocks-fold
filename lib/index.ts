@@ -84,7 +84,7 @@ const judge = (el: HTMLElement, height: number) => {
  * @param height 限制高度
  */
 const fold = (el: HTMLElement, height: number) => {
-    if (el.classList.contains('fold')) {
+    if (el.querySelector('.fold-btn')) {
         return;
     }
     // console.log('生成折叠...');
