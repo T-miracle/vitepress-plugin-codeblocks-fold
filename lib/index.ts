@@ -87,7 +87,8 @@ const fold = (el: HTMLElement, height: number) => {
     if (el.querySelector('.fold-btn')) {
         return;
     }
-    // console.log('生成折叠...');
+    console.log(el)
+    console.log('生成折叠...');
     const pre = el.querySelector('pre')!;
     pre.style.height = height + 'px';
     pre.style.overflow = 'hidden';
@@ -105,7 +106,6 @@ const fold = (el: HTMLElement, height: number) => {
         const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
         foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
     }
-    foldBtn.parentElement!.classList.add('fold')
 };
 
 /**
