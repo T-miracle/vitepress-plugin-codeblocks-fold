@@ -4,7 +4,7 @@
   --codeblocks-margin-bottom: 52px;
 }
 
-.vp-doc div[class*="language-"] {
+.vp-doc div.fold[class*="language-"] {
   overflow: unset;
   margin-bottom: var(--codeblocks-margin-bottom);
 
