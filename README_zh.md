@@ -1,5 +1,7 @@
 # vitepress-plugin-codeblocks-fold
 
+> 请更新至版本 >= 1.1.0
+
 [![npm](https://img.shields.io/npm/v/vitepress-plugin-codeblocks-fold?color=green)](https://www.npmjs.com/package/vitepress-plugin-codeblocks-fold)
 
 ![](./demo.webp)

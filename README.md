@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/vitepress-plugin-codeblocks-fold?color=green)](https://www.npmjs.com/package/vitepress-plugin-codeblocks-fold)
 
-> Please update >= 1.1.0
+> Please update version >= 1.1.0
 
 EN | [中文文档](README_zh.md)
 
