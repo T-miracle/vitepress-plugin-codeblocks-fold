@@ -87,7 +87,7 @@ const fold = (el: HTMLElement, height: number) => {
     if (el.querySelector('.fold-btn')) {
         return;
     }
-    console.log(el)
+    // console.log(el)
     console.log('生成折叠...');
     const pre = el.querySelector('pre')!;
     pre.style.height = height + 'px';
