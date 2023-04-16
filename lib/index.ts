@@ -20,7 +20,7 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
     }
     // 获取文章里的所有代码块
     const codeblocks = document.querySelectorAll('.vp-doc [class*="language-"]');
-    console.log(codeblocks);
+    // console.log(codeblocks);
     // 遍历给代码块添加折叠
     codeblocks.forEach((el: Element, index: number) => {
         const element = el as HTMLElement;
@@ -131,7 +131,7 @@ const foldBtnEvent = (els: { pre: HTMLElement, foldBtn: HTMLElement, iconElement
 };
 
 const rebindListener = (height: number) => {
-    console.log('重新绑定监听...')
+    // console.log('重新绑定监听...')
     const codeblocks = document.querySelectorAll('.vp-doc [class*="language-"]');
     codeblocks.forEach(el => {
         const foldBtn = el.querySelector('.fold-btn') as HTMLElement;
@@ -154,15 +154,15 @@ const rebindListener = (height: number) => {
  * @param height The height of the folded codeblocks（default 400px）.  折叠后的代码块高度（默认 400px）
  */
 const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = true, height: number = 400) => {
-    console.log(`初始化`)
+    // console.log(`初始化`)
     const { frontmatter, route } = vitepressObj;
     onMounted(() => {
-        console.log('onMounted...')
+        // console.log('onMounted...')
         cbf(frontmatter, defaultAllFold, height);
         rebindListener(height);
     });
     watch(() => route.path, () => {
-        console.log('watch route...')
+        // console.log('watch route...')
         nextTick(() => {
             cbf(vitepressObj.frontmatter, defaultAllFold, height);
             rebindListener(height);

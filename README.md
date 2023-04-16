@@ -2,7 +2,11 @@
 
 [![npm](https://img.shields.io/npm/v/vitepress-plugin-codeblocks-fold?color=green)](https://www.npmjs.com/package/vitepress-plugin-codeblocks-fold)
 
-> The current project is in beta, please use stable version 1.1.0
+> The current project is in beta
+> 
+> If your vitepress version is 1.0.0-alpha.47, then you can use the latest version
+> 
+> If your vitepress version is greater than 1.0.0-alpha.47, please use stable version 1.1.0
 
 EN | [中文文档](README_zh.md)
 

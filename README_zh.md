@@ -1,6 +1,10 @@
 # vitepress-plugin-codeblocks-fold
 
-> 当前项目处于测试阶段，请使用稳定版本 1.1.0
+> 当前项目处于测试阶段
+> 
+> 如果你的 vitepress 版本是 1.0.0-alpha.47，你可以使用最新版本
+>
+> 如果你的 vitepress 版本大于 1.0.0-alpha.47，请使用稳定版本 1.1.0
 
 [![npm](https://img.shields.io/npm/v/vitepress-plugin-codeblocks-fold?color=green)](https://www.npmjs.com/package/vitepress-plugin-codeblocks-fold)
 
