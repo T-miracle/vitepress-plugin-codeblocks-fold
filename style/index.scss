@@ -4,7 +4,7 @@
 	--codeblocks-margin-bottom: 52px;
 }
 
-.vp-doc div[class*="language-"] {
+.vp-doc div.fold[class*="language-"] {
 	overflow: unset;
 	margin-bottom: var(--codeblocks-margin-bottom);
 
@@ -60,7 +60,7 @@
 	}
 }
 
-.dark .vp-doc div[class*="language-"] {
+.dark .vp-doc div.fold[class*="language-"] {
 	.codeblocks-mask {
 		background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0) 0%, var(--fold-btn-bg-color-dark) 100%);
 	}
