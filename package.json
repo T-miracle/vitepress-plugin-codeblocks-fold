@@ -3,7 +3,8 @@
   "version": "1.2.8",
   "description": "Add collapse to vitepress codeblocks",
   "type": "module",
-  "types": "./lib/index.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "run": "vitepress dev docs"
   },
