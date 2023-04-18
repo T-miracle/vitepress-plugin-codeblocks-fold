@@ -27,7 +27,7 @@ yarn add vitepress-plugin-codeblocks-fold
 import DefaultTheme from 'vitepress/theme';
 import { useData, useRoute } from 'vitepress';
 import codeblocksFold from 'vitepress-plugin-codeblocks-fold'; // import method
-import 'vitepress-plugin-codeblocks-fold/style/index.css'; // import style
+import 'vitepress-plugin-codeblocks-fold/style/index.scss'; // import style
 
 export default {
     ...DefaultTheme,
