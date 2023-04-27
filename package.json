@@ -1,6 +1,6 @@
 {
   "name": "vitepress-plugin-codeblocks-fold",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "Add collapse to vitepress codeblocks",
   "type": "module",
   "main": "./lib/index.js",
