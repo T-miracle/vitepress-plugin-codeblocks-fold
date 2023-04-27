@@ -38,7 +38,7 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
                 }
             }
         } else { // 如果是布尔值
-            if (defaultAllFold) {
+            if (defaultAllFold && fm) {
                 judge(element, height);
             }
         }
