@@ -2,9 +2,6 @@
 
 [![npm](https://img.shields.io/npm/v/vitepress-plugin-codeblocks-fold?color=green)](https://www.npmjs.com/package/vitepress-plugin-codeblocks-fold)
 
-> This plugin may not be compatible with some vitepress versions. 
-> If the functionality is not working properly, please use stable version 1.1.0
-
 English | [简体中文](README_zh.md)
 
 ![](./demo.webp)

@@ -1,7 +1,5 @@
 # vitepress-plugin-codeblocks-fold
 
-> 本插件可能与一些vitepress版本不兼容，如果功能使用不正常，请使用稳定版本 1.1.0
-
 [![npm](https://img.shields.io/npm/v/vitepress-plugin-codeblocks-fold?color=green)](https://www.npmjs.com/package/vitepress-plugin-codeblocks-fold)
 
 ![](./demo.webp)
