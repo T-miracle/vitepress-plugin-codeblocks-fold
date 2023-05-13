@@ -71,7 +71,9 @@ const observer = (el: HTMLElement, height: number) => {
  */
 const judge = (el: HTMLElement, height: number) => {
     const displayStatus: string = window.getComputedStyle(el, null).getPropertyValue('display');
-    if (displayStatus === 'none') {
+    const isDetailBlock: boolean = el.parentElement!.classList.contains('details');
+    // console.log(isDetailBlock)
+    if (displayStatus === 'none' || isDetailBlock) {
         observer(el, height);
     } else {
         fold(el, height);

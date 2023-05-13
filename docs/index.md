@@ -1,3 +1,7 @@
+---
+cbf: false
+---
+
 # Index
 
 :::code-group
