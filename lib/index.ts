@@ -1,5 +1,5 @@
-import { nextTick, onMounted, Ref, watch } from 'vue';
-import { PageData, Route } from 'vitepress';
+import {nextTick, onMounted, Ref, watch} from 'vue';
+import {PageData, Route} from 'vitepress';
 
 type vitepressAPI = {
     frontmatter: Ref<PageData['frontmatter']>,
@@ -52,7 +52,7 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
  * @param height 限制高度
  */
 const observer = (el: HTMLElement, height: number) => {
-    new MutationObserver((mutations, observer) => {
+    new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             const _el = mutation.target as HTMLElement;
             if (mutation.attributeName === 'class' && _el.classList.contains('active') && _el.offsetHeight > height) {
@@ -60,9 +60,21 @@ const observer = (el: HTMLElement, height: number) => {
             }
         });
     }).observe(el, {
-        attributeFilter: [ 'class' ]
+        attributeFilter: ['class']
     });
 };
+
+const themeBtnObserver = (el: HTMLElement, height: number) => {
+    new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                observer(el, height);
+            }
+        });
+    }).observe(document.querySelector('html')!, {
+        attributeFilter: ['class']
+    });
+}
 
 /**
  * 判断是否是代码块组中未显示的代码块
@@ -72,7 +84,6 @@ const observer = (el: HTMLElement, height: number) => {
 const judge = (el: HTMLElement, height: number) => {
     const displayStatus: string = window.getComputedStyle(el, null).getPropertyValue('display');
     const isDetailBlock: boolean = el.parentElement!.classList.contains('details');
-    // console.log(isDetailBlock)
     if (displayStatus === 'none' || isDetailBlock) {
         observer(el, height);
     } else {
@@ -90,22 +101,29 @@ const fold = (el: HTMLElement, height: number) => {
         return;
     }
     el.classList.add('fold')
-    const pre = el.querySelector('pre')!;
-    pre.style.height = height + 'px';
-    pre.style.overflow = 'hidden';
+    const pres = el.querySelectorAll('pre')!;
+    pres.forEach(pre => {
+        pre.style.height = height + 'px';
+        pre.style.overflow = 'hidden';
+    })
+    el.style.marginBottom = '48px';
     el.style.borderRadius = '8px 8px 0 0';
     const foldBtn = document.createElement('div');
     const mask = document.createElement('div');
+    mask.style.backgroundImage = 'linear-gradient(-180deg, rgba(0, 0, 0, 0) 0%, var(--vp-code-block-bg) 100%)'
     mask.className = 'codeblocks-mask';
+    foldBtn.style.backgroundColor = 'var(--vp-code-block-bg)'
     foldBtn.className = 'fold-btn';
-    foldBtn.insertAdjacentHTML('afterbegin', `<svg t="1680893932803" class="fold-btn-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1473" width="16" height="16"><path d="M553.1392 778.88512l451.61472-451.61472c22.64576-22.64576 22.64576-59.4176 0-82.14016-22.64576-22.64576-59.4176-22.64576-82.14016 0l-410.5472 410.61888-410.61888-410.624c-22.64576-22.64576-59.4176-22.64576-82.14016 0-22.64576 22.64576-22.64576 59.4176 0 82.14016l451.69152 451.69152a58.08128 58.08128 0 0 0 82.14016-0.07168z" p-id="1474"></path></svg>`);
+    foldBtn.insertAdjacentHTML('afterbegin', `<svg t="1680893932803" class="fold-btn-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1473" width="16" height="16" style="fill: var(--vp-code-block-bg); filter: invert(100%)"><path d="M553.1392 778.88512l451.61472-451.61472c22.64576-22.64576 22.64576-59.4176 0-82.14016-22.64576-22.64576-59.4176-22.64576-82.14016 0l-410.5472 410.61888-410.61888-410.624c-22.64576-22.64576-59.4176-22.64576-82.14016 0-22.64576 22.64576-22.64576 59.4176 0 82.14016l451.69152 451.69152a58.08128 58.08128 0 0 0 82.14016-0.07168z" p-id="1474"></path></svg>`);
     el.appendChild(mask);
     el.appendChild(foldBtn);
     // 添加折叠事件
     foldBtn.onclick = () => {
         const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
         const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
-        foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
+        pres.forEach(pre => {
+            foldBtnEvent({pre, foldBtn, iconElement, maskElement}, height);
+        })
     }
 };
 
@@ -114,8 +132,13 @@ const fold = (el: HTMLElement, height: number) => {
  * @param els 元素对象
  * @param height 高度
  */
-const foldBtnEvent = (els: { pre: HTMLElement, foldBtn: HTMLElement, iconElement: HTMLElement, maskElement: HTMLElement }, height: number) => {
-    const { pre, foldBtn, iconElement, maskElement } = els;
+const foldBtnEvent = (els: {
+    pre: HTMLElement,
+    foldBtn: HTMLElement,
+    iconElement: HTMLElement,
+    maskElement: HTMLElement
+}, height: number) => {
+    const {pre, foldBtn, iconElement, maskElement} = els;
     if (pre!.classList.contains('expand')) { // 折叠
         const oldPos = foldBtn.getBoundingClientRect().top;
         pre!.style.height = height + 'px';
@@ -138,12 +161,12 @@ const rebindListener = (height: number) => {
     codeblocks.forEach(el => {
         const foldBtn = el.querySelector('.fold-btn') as HTMLElement;
         // console.log(`--->`, foldBtn?.onclick)
-        if(foldBtn && !foldBtn.onclick) {
-            foldBtn.onclick=  () => {
+        if (foldBtn && !foldBtn.onclick) {
+            foldBtn.onclick = () => {
                 const pre = el.querySelector('pre') as HTMLElement;
                 const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
                 const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
-                foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
+                foldBtnEvent({pre, foldBtn, iconElement, maskElement}, height);
             }
         }
     })
@@ -157,7 +180,7 @@ const rebindListener = (height: number) => {
  */
 const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = true, height: number = 400) => {
     // console.log(`初始化`)
-    const { frontmatter, route } = vitepressObj;
+    const {frontmatter, route} = vitepressObj;
     onMounted(() => {
         // console.log('onMounted...')
         cbf(frontmatter, defaultAllFold, height);

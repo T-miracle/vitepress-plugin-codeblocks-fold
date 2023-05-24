@@ -1,5 +1,5 @@
 ---
-cbf: false
+cbf: true
 ---
 
 # Index
