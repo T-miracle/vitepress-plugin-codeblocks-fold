@@ -1,3 +1,7 @@
+:root {
+	--vp-code-block-bg: rgba(0, 0, 0, .2)
+}
+
 .vp-doc {
 	div.fold[class*="language-"] {
 		overflow: unset;

@@ -64,18 +64,6 @@ const observer = (el: HTMLElement, height: number) => {
     });
 };
 
-const themeBtnObserver = (el: HTMLElement, height: number) => {
-    new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.attributeName === 'class') {
-                observer(el, height);
-            }
-        });
-    }).observe(document.querySelector('html')!, {
-        attributeFilter: ['class']
-    });
-}
-
 /**
  * 判断是否是代码块组中未显示的代码块
  * @param el 元素
@@ -172,6 +160,14 @@ const rebindListener = (height: number) => {
     })
 }
 
+function isRGBA(value: string) {
+    // 使用正则表达式匹配 RGBA 值的模式
+    const rgbaPattern = /^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*(0(\.\d+)?|1(\.0+)?)\s*\)$/i;
+
+    // 使用 test 方法检查值是否符合模式
+    return rgbaPattern.test(value);
+}
+
 /**
  * Set codeblocks folding.  设置代码块折叠
  * @param vitepressObj route and frontmatter.  路由与前言
@@ -194,5 +190,25 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
         }).then();
     });
 };
+
+new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+            let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
+            // console.log(_isRGBA)
+            if (_isRGBA) {
+                document.querySelectorAll('.codeblocks-mask').forEach(item => {
+                    (item as HTMLElement).style.display = 'none'
+                })
+            } else {
+                document.querySelectorAll('.codeblocks-mask').forEach(item => {
+                    (item as HTMLElement).style.display = ''
+                })
+            }
+        }
+    });
+}).observe(document.querySelector('html')!, {
+    attributeFilter: ['class']
+});
 
 export default codeblocksFold;
