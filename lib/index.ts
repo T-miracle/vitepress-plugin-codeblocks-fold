@@ -43,6 +43,8 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
             }
         }
     });
+
+    themeChangeObserver();
 };
 
 /**
@@ -203,7 +205,6 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
         // console.log('onMounted...')
         cbf(frontmatter, defaultAllFold, height);
         rebindListener(height);
-        themeChangeObserver();
     });
     watch(() => route.path, () => {
         // console.log('watch route...')
