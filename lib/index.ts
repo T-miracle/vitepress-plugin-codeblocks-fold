@@ -168,6 +168,28 @@ function isRGBA(value: string) {
     return rgbaPattern.test(value);
 }
 
+(() => {
+    new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
+                // console.log(_isRGBA)
+                if (_isRGBA) {
+                    document.querySelectorAll('.codeblocks-mask').forEach(item => {
+                        (item as HTMLElement).style.display = 'none'
+                    })
+                } else {
+                    document.querySelectorAll('.codeblocks-mask').forEach(item => {
+                        (item as HTMLElement).style.display = ''
+                    })
+                }
+            }
+        });
+    }).observe(document.querySelector('html')!, {
+        attributeFilter: ['class']
+    });
+})()
+
 /**
  * Set codeblocks folding.  设置代码块折叠
  * @param vitepressObj route and frontmatter.  路由与前言
@@ -188,26 +210,6 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
             cbf(vitepressObj.frontmatter, defaultAllFold, height);
             rebindListener(height);
         }).then();
-    });
-
-    new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.attributeName === 'class') {
-                let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
-                // console.log(_isRGBA)
-                if (_isRGBA) {
-                    document.querySelectorAll('.codeblocks-mask').forEach(item => {
-                        (item as HTMLElement).style.display = 'none'
-                    })
-                } else {
-                    document.querySelectorAll('.codeblocks-mask').forEach(item => {
-                        (item as HTMLElement).style.display = ''
-                    })
-                }
-            }
-        });
-    }).observe(document.querySelector('html')!, {
-        attributeFilter: ['class']
     });
 };
 
