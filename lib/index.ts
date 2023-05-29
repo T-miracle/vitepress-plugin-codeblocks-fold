@@ -6,6 +6,8 @@ type vitepressAPI = {
     route: Route
 }
 
+let themeChangeObserve: any = null;
+
 /**
  * 设置代码块折叠功能
  * @param frontmatter 前言
@@ -44,7 +46,7 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
         }
     });
 
-    themeChangeObserver();
+    !themeChangeObserve && themeChangeObserver();
 };
 
 /**
@@ -172,28 +174,37 @@ function isRGBA(value: string) {
 
 const themeChangeObserver = () => {
     hideMask();
-    new MutationObserver((mutations) => {
+    themeChangeObserve = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.attributeName === 'class') {
+                console.log(`hideMask---${new Date()}`)
                 hideMask();
             }
         });
-    }).observe(document.querySelector('html')!, {
+    })
+    themeChangeObserve.observe(document.querySelector('html')!, {
         attributeFilter: ['class']
     });
 }
 
 const hideMask = () => {
-    let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
-    // console.log(_isRGBA)
-    if (_isRGBA) {
-        document.querySelectorAll('.codeblocks-mask').forEach(item => {
-            (item as HTMLElement).style.display = 'none'
-        })
-    } else {
-        document.querySelectorAll('.codeblocks-mask').forEach(item => {
-            (item as HTMLElement).style.display = ''
-        })
+    if (document.querySelector('.vp-doc [class*="language-"]')) {
+        let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
+        console.log(`isRGBA`, _isRGBA)
+        if (_isRGBA) {
+            nextTick(() => {
+                document.querySelectorAll('.codeblocks-mask').forEach(item => {
+                    console.log(`display`);
+                    (item as HTMLElement).style.display = 'none';
+                })
+            }).then()
+        } else {
+            nextTick(() => {
+                document.querySelectorAll('.codeblocks-mask').forEach(item => {
+                    (item as HTMLElement).style.display = '';
+                })
+            }).then()
+        }
     }
 }
 
