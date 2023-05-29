@@ -189,26 +189,26 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
             rebindListener(height);
         }).then();
     });
-};
 
-new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-            let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
-            // console.log(_isRGBA)
-            if (_isRGBA) {
-                document.querySelectorAll('.codeblocks-mask').forEach(item => {
-                    (item as HTMLElement).style.display = 'none'
-                })
-            } else {
-                document.querySelectorAll('.codeblocks-mask').forEach(item => {
-                    (item as HTMLElement).style.display = ''
-                })
+    new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
+                // console.log(_isRGBA)
+                if (_isRGBA) {
+                    document.querySelectorAll('.codeblocks-mask').forEach(item => {
+                        (item as HTMLElement).style.display = 'none'
+                    })
+                } else {
+                    document.querySelectorAll('.codeblocks-mask').forEach(item => {
+                        (item as HTMLElement).style.display = ''
+                    })
+                }
             }
-        }
+        });
+    }).observe(document.querySelector('html')!, {
+        attributeFilter: ['class']
     });
-}).observe(document.querySelector('html')!, {
-    attributeFilter: ['class']
-});
+};
 
 export default codeblocksFold;

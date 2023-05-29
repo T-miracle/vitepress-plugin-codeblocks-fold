@@ -6,7 +6,9 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
-    "run": "vitepress dev docs"
+    "run": "vitepress dev docs",
+    "dev": "vitepress dev",
+    "build": "vitepress build"
   },
   "files": [
     "lib",
