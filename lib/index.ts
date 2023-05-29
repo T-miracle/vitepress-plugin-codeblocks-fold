@@ -171,25 +171,30 @@ function isRGBA(value: string) {
 }
 
 const themeChangeObserver = () => {
+    hideMask();
     new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.attributeName === 'class') {
-                let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
-                // console.log(_isRGBA)
-                if (_isRGBA) {
-                    document.querySelectorAll('.codeblocks-mask').forEach(item => {
-                        (item as HTMLElement).style.display = 'none'
-                    })
-                } else {
-                    document.querySelectorAll('.codeblocks-mask').forEach(item => {
-                        (item as HTMLElement).style.display = ''
-                    })
-                }
+                hideMask();
             }
         });
     }).observe(document.querySelector('html')!, {
         attributeFilter: ['class']
     });
+}
+
+const hideMask = () => {
+    let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
+    // console.log(_isRGBA)
+    if (_isRGBA) {
+        document.querySelectorAll('.codeblocks-mask').forEach(item => {
+            (item as HTMLElement).style.display = 'none'
+        })
+    } else {
+        document.querySelectorAll('.codeblocks-mask').forEach(item => {
+            (item as HTMLElement).style.display = ''
+        })
+    }
 }
 
 /**
