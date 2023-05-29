@@ -168,7 +168,7 @@ function isRGBA(value: string) {
     return rgbaPattern.test(value);
 }
 
-(() => {
+const themeChangeObserver = () => {
     new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.attributeName === 'class') {
@@ -188,7 +188,7 @@ function isRGBA(value: string) {
     }).observe(document.querySelector('html')!, {
         attributeFilter: ['class']
     });
-})()
+}
 
 /**
  * Set codeblocks folding.  设置代码块折叠
@@ -203,6 +203,7 @@ const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = tr
         // console.log('onMounted...')
         cbf(frontmatter, defaultAllFold, height);
         rebindListener(height);
+        themeChangeObserver();
     });
     watch(() => route.path, () => {
         // console.log('watch route...')
