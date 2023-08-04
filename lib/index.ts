@@ -134,6 +134,8 @@ const foldBtnEvent = (els: {
     if (pre!.classList.contains('expand')) { // 折叠
         const oldPos = foldBtn.getBoundingClientRect().top;
         pre!.style.height = height + 'px';
+        pre!.style.overflow = 'hidden';
+        pre!.scrollTo(0, 0);
         pre!.classList.remove('expand');
         maskElement.style.height = '48px';
         iconElement.classList.remove('turn');
@@ -141,6 +143,7 @@ const foldBtnEvent = (els: {
         window.scrollTo(0, foldBtn.getBoundingClientRect().top + window.scrollY - oldPos);
     } else { // 展开
         pre!.style.height = 'auto';
+        pre!.style.overflow = 'scroll';
         pre!.classList.add('expand');
         maskElement.style.height = '20px';
         iconElement.classList.add('turn');
@@ -177,7 +180,7 @@ const themeChangeObserver = () => {
     themeChangeObserve = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.attributeName === 'class') {
-                console.log(`hideMask---${new Date()}`)
+                // console.log(`hideMask---${new Date()}`)
                 hideMask();
             }
         });
@@ -190,11 +193,11 @@ const themeChangeObserver = () => {
 const hideMask = () => {
     if (document.querySelector('.vp-doc [class*="language-"]')) {
         let _isRGBA: boolean = isRGBA(window.getComputedStyle(document.querySelector('.vp-doc [class*="language-"]')!, null).getPropertyValue('background-color'));
-        console.log(`isRGBA`, _isRGBA)
+        // console.log(`isRGBA`, _isRGBA)
         if (_isRGBA) {
             nextTick(() => {
                 document.querySelectorAll('.codeblocks-mask').forEach(item => {
-                    console.log(`display`);
+                    // console.log(`display`);
                     (item as HTMLElement).style.display = 'none';
                 })
             }).then()
