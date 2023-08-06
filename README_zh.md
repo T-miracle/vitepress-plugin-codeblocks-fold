@@ -6,6 +6,20 @@
 
 > 给 vitepress 代码块添加折叠功能
 
+<details open>
+  <summary>更新日志</summary>
+  <ul>
+    <li>
+      <p>v1.2.26</p>
+      <p>美化滚动条样式</p>
+    </li>
+    <li>
+      <p>v1.2.25</p>
+      <p>修复横向滚动条不显示</p>
+    </li>
+  </ul>
+</details>
+
 ## 安装
 
 ```shell

@@ -8,6 +8,20 @@ English | [简体中文](README_zh.md)
 
 > Add collapse to vitepress codeblocks
 
+<details open>
+  <summary>update log</summary>
+  <ul>
+    <li>
+      <p>v1.2.26</p>
+      <p>Scrollbar style beautification</p>
+    </li>
+    <li>
+      <p>v1.2.25</p>
+      <p>Fix the horizontal scrollbar not showing</p>
+    </li>
+  </ul>
+</details>
+
 ## Install
 
 ```shell

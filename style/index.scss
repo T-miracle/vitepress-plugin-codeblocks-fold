@@ -1,54 +1,118 @@
 .vp-doc {
-	div.fold[class*="language-"] {
-		overflow: unset;
-		margin-bottom: var(--codeblocks-margin-bottom);
+    div.fold[class*="language-"] {
+        overflow: unset;
+        margin-bottom: var(--codeblocks-margin-bottom);
 
-		> .codeblocks-mask {
-			display: block;
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			height: 48px;
-			width: 100%;
-			z-index: 9;
-			pointer-events: none;
-		}
+        > .codeblocks-mask {
+            display: block;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 48px;
+            width: 100%;
+            z-index: 9;
+            pointer-events: none;
+        }
 
-		> .fold-btn {
-			display: flex;
-			position: absolute;
-			left: 0;
-			bottom: -36px;
-			height: 36px;
-			width: 100%;
-			z-index: 9;
-			border-radius: 0 0 8px 8px;
-			cursor: pointer;
-			user-select: none;
-			justify-content: center;
-			align-items: center;
+        > .fold-btn {
+            display: flex;
+            position: absolute;
+            left: 0;
+            bottom: -36px;
+            height: 36px;
+            width: 100%;
+            z-index: 9;
+            border-radius: 0 0 8px 8px;
+            cursor: pointer;
+            user-select: none;
+            justify-content: center;
+            align-items: center;
 
-			> svg.fold-btn-icon {
-				animation: float1 infinite .8s;
+            > svg.fold-btn-icon {
+                animation: float1 infinite .8s;
 
-				&.turn {
-					animation: float2 infinite .8s;
-				}
-			}
+                &.turn {
+                    animation: float2 infinite .8s;
+                }
+            }
 
-			@for $i from 1 through 2 {
-				@keyframes float#{$i} {
-					0% {
-						transform: translateY(0px) if($i == 2, rotate(180deg), null);
-					}
-					50% {
-						transform: translateY(-5px) if($i == 2, rotate(180deg), null);
-					}
-					100% {
-						transform: translateY(0px) if($i == 2, rotate(180deg), null);
-					}
-				}
-			}
-		}
-	}
+            @for $i from 1 through 2 {
+                @keyframes float#{$i} {
+                    0% {
+                        transform: translateY(0px) if($i == 2, rotate(180deg), null);
+                    }
+                    50% {
+                        transform: translateY(-5px) if($i == 2, rotate(180deg), null);
+                    }
+                    100% {
+                        transform: translateY(0px) if($i == 2, rotate(180deg), null);
+                    }
+                }
+            }
+        }
+    }
+
+    /* 设置全局滚动条样式 */
+    pre.shiki {
+        /*--ms-滚动条--*/
+        scrollbar-width: auto;
+        scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+        /*-webkit-滚动条*/
+        &::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+            background-color: transparent;
+        }
+
+        /*-webkit-滑块*/
+        &::-webkit-scrollbar-thumb {
+            height: 10px;
+            // outline-offset: -2px;
+            // outline: 2px rgba(255, 255, 255, 0.4) solid;
+            border-radius: 2px;
+            border: 1px transparent solid;
+            background-color: rgba(0, 0, 0, 0.2);
+
+            .dark & {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        /*-webkit-滑块hover效果*/
+        &::-webkit-scrollbar-thumb:hover {
+            height: 10px;
+            border-radius: 2px;
+            background-color: rgba(0, 0, 0, 0.4);
+
+            .dark & {
+                background-color: rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        /*-webkit-滚动框*/
+        &::-webkit-scrollbar-track-piece {
+            -webkit-border-radius: 0;
+            background-color: transparent;
+        }
+
+        /* -webkit-滑轨 */
+        &::-webkit-scrollbar-track {
+            right: 0;
+            background-color: transparent;
+        }
+
+        /* -webkit-滑轨两头的按钮 */
+        &::-webkit-scrollbar-button {
+            // display: none;
+            height: 4px;
+            width: 4px;
+            background-color: transparent;
+        }
+
+        /* -webkit-边角 */
+        &::-webkit-scrollbar-corner {
+            background-color: transparent;
+        }
+    }
 }
