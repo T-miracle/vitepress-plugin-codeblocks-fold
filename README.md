@@ -12,8 +12,8 @@ English | [简体中文](README_zh.md)
   <summary>update log</summary>
   <ul>
     <li>
-      <p>v1.2.26</p>
-      <p>Scrollbar style beautification</p>
+      <p>v1.2.27</p>
+      <p>Scrollbar style remove</p>
     </li>
     <li>
       <p>v1.2.25</p>

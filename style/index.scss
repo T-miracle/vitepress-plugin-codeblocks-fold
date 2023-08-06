@@ -55,64 +55,56 @@
     /* 设置全局滚动条样式 */
     pre.shiki {
         /*--ms-滚动条--*/
-        scrollbar-width: auto;
-        scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        scrollbar-width: auto !important;
+        scrollbar-color: transparent transparent !important;
 
         /*-webkit-滚动条*/
         &::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
+            width: 4px !important;
+            height: 4px !important;
             background-color: transparent;
         }
 
         /*-webkit-滑块*/
         &::-webkit-scrollbar-thumb {
-            height: 10px;
-            // outline-offset: -2px;
-            // outline: 2px rgba(255, 255, 255, 0.4) solid;
-            border-radius: 2px;
-            border: 1px transparent solid;
-            background-color: rgba(0, 0, 0, 0.2);
-
-            .dark & {
-                background-color: rgba(255, 255, 255, 0.2);
-            }
+            height: 10px !important;
+            outline-offset: 0 !important;
+            outline: unset !important;
+            border-radius: 2px !important;
+            border: 1px transparent solid !important;
+            background-color: transparent !important;
         }
 
         /*-webkit-滑块hover效果*/
         &::-webkit-scrollbar-thumb:hover {
-            height: 10px;
-            border-radius: 2px;
-            background-color: rgba(0, 0, 0, 0.4);
-
-            .dark & {
-                background-color: rgba(255, 255, 255, 0.4);
-            }
+            height: 10px !important;
+            border-radius: 2px !important;
+            background-color: transparent !important;
         }
 
         /*-webkit-滚动框*/
         &::-webkit-scrollbar-track-piece {
-            -webkit-border-radius: 0;
-            background-color: transparent;
+            -webkit-border-radius: 0 !important;
+            background-color: transparent !important;
         }
 
         /* -webkit-滑轨 */
         &::-webkit-scrollbar-track {
-            right: 0;
-            background-color: transparent;
+            right: 0 !important;
+            background-color: transparent !important;
         }
 
         /* -webkit-滑轨两头的按钮 */
         &::-webkit-scrollbar-button {
             // display: none;
-            height: 4px;
-            width: 4px;
-            background-color: transparent;
+            height: 4px !important;
+            width: 4px !important;
+            background-color: transparent !important;
         }
 
         /* -webkit-边角 */
         &::-webkit-scrollbar-corner {
-            background-color: transparent;
+            background-color: transparent !important;
         }
     }
 }

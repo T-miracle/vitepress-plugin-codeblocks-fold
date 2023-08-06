@@ -143,7 +143,7 @@ const foldBtnEvent = (els: {
         window.scrollTo(0, foldBtn.getBoundingClientRect().top + window.scrollY - oldPos);
     } else { // 展开
         pre!.style.height = 'auto';
-        pre!.style.overflow = 'scroll';
+        pre!.style.overflow = 'auto';
         pre!.classList.add('expand');
         maskElement.style.height = '0';
         iconElement.classList.add('turn');
