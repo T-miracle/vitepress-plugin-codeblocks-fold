@@ -1,6 +1,5 @@
 import { EnhanceAppContext, useData, useRoute } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-// @ts-ignore
 import codeblocksFold from '../../../lib/index.ts';
 import '../../../style/index.scss'
 

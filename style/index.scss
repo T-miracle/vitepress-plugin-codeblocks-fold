@@ -3,6 +3,10 @@
         overflow: unset;
         margin-bottom: var(--codeblocks-margin-bottom);
 
+        > .line-numbers-wrapper {
+            overflow: hidden;
+        }
+
         > .codeblocks-mask {
             display: block;
             position: absolute;

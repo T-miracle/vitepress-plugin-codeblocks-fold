@@ -4,6 +4,7 @@ export default defineConfig({
     // lang: "zh-CN",
     title: 'test',
     markdown: {
+        lineNumbers: true,
         theme: {
             light: 'vitesse-light',
             dark: 'vitesse-dark',
