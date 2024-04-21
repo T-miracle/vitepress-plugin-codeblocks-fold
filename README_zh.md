@@ -40,7 +40,7 @@ yarn add vitepress-plugin-codeblocks-fold
 import DefaultTheme from 'vitepress/theme';
 import { useData, useRoute } from 'vitepress';
 import codeblocksFold from 'vitepress-plugin-codeblocks-fold'; // 导入方法
-import 'vitepress-plugin-codeblocks-fold/style/index.scss'; // 导入样式
+import 'vitepress-plugin-codeblocks-fold/style/index.css'; // 导入样式
 
 export default {
     ...DefaultTheme,
