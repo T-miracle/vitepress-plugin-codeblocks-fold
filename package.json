@@ -26,6 +26,9 @@
   },
   "author": "T-miracle",
   "license": "MIT",
+  "peerDependencies": {
+    "sass": "^1.62.0",
+  }
   "devDependencies": {
     "sass": "^1.62.0",
     "vitepress": "^1.0.0-alpha.65",
