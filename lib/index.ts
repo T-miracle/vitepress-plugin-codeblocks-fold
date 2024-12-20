@@ -62,7 +62,7 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
                     behavior: 'smooth'
                 });
             }
-        });
+        }, 200);
     }
 };
 
