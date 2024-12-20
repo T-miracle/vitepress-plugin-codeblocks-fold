@@ -12,6 +12,10 @@ English | [简体中文](README_zh.md)
   <summary>update log</summary>
   <ul>
     <li>
+      <p>v1.2.29</p>
+      <p>Fix anchor point positioning issue</p>
+    </li>
+    <li>
       <p>v1.2.28</p>
       <p>Fix line number display out of bounds</p>
     </li>
