@@ -53,7 +53,9 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
     // 如果有锚点，滚动到锚点位置
     if (hash) {
         setTimeout(() => {
-            const target = document.querySelector(hash);
+            // hash解码
+            const _hash = decodeURIComponent(hash);
+            const target = document.querySelector(_hash);
             const headerHeight = document.querySelector('.VPNav')!.clientHeight;
             if (target) {
                 // 带动画滚动
