@@ -4,6 +4,8 @@ cbf: true
 
 # Index
 
+[jump eee.md test3 title](./eee.md#test3)
+
 :::code-group
 
 ```vue [Vue2]

@@ -1,5 +1,5 @@
-import {nextTick, onMounted, Ref, watch} from 'vue';
-import {PageData, Route} from 'vitepress';
+import { nextTick, onBeforeMount, onMounted, Ref, watch } from 'vue';
+import { PageData, Route } from 'vitepress';
 
 type vitepressAPI = {
     frontmatter: Ref<PageData['frontmatter']>,
@@ -47,12 +47,28 @@ const cbf = (frontmatter: Ref<PageData['frontmatter']>, defaultAllFold: boolean,
     });
 
     !themeChangeObserve && themeChangeObserver();
+
+    // 获取url中的锚点
+    const hash = location.hash;
+    // 如果有锚点，滚动到锚点位置
+    if (hash) {
+        setTimeout(() => {
+            const target = document.querySelector(hash);
+            const headerHeight = document.querySelector('.VPNav')!.clientHeight;
+            if (target) {
+                // 带动画滚动
+                window.scrollTo({
+                    top: target.getBoundingClientRect().top + window.scrollY - headerHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
 };
 
 /**
  * 兼容代码块组
  * @param el 元素
- * @param defaultAllFold 默认全部折叠
  * @param height 限制高度
  */
 const observer = (el: HTMLElement, height: number) => {
@@ -64,7 +80,7 @@ const observer = (el: HTMLElement, height: number) => {
             }
         });
     }).observe(el, {
-        attributeFilter: ['class']
+        attributeFilter: [ 'class' ]
     });
 };
 
@@ -92,19 +108,19 @@ const fold = (el: HTMLElement, height: number) => {
     if (el.classList.contains('fold')) {
         return;
     }
-    el.classList.add('fold')
+    el.classList.add('fold');
     const pres = el.querySelectorAll('pre')!;
     pres.forEach(pre => {
         pre.style.height = height + 'px';
         pre.style.overflow = 'hidden';
-    })
+    });
     el.style.marginBottom = '48px';
     el.style.borderRadius = '8px 8px 0 0';
     const foldBtn = document.createElement('div');
     const mask = document.createElement('div');
-    mask.style.backgroundImage = 'linear-gradient(-180deg, rgba(0, 0, 0, 0) 0%, var(--vp-code-block-bg) 100%)'
+    mask.style.backgroundImage = 'linear-gradient(-180deg, rgba(0, 0, 0, 0) 0%, var(--vp-code-block-bg) 100%)';
     mask.className = 'codeblocks-mask';
-    foldBtn.style.backgroundColor = 'var(--vp-code-block-bg)'
+    foldBtn.style.backgroundColor = 'var(--vp-code-block-bg)';
     foldBtn.className = 'fold-btn';
     foldBtn.insertAdjacentHTML('afterbegin', `<svg t="1680893932803" class="fold-btn-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1473" width="16" height="16" style="fill: var(--vp-code-block-bg); filter: invert(100%)"><path d="M553.1392 778.88512l451.61472-451.61472c22.64576-22.64576 22.64576-59.4176 0-82.14016-22.64576-22.64576-59.4176-22.64576-82.14016 0l-410.5472 410.61888-410.61888-410.624c-22.64576-22.64576-59.4176-22.64576-82.14016 0-22.64576 22.64576-22.64576 59.4176 0 82.14016l451.69152 451.69152a58.08128 58.08128 0 0 0 82.14016-0.07168z" p-id="1474"></path></svg>`);
     el.appendChild(mask);
@@ -114,9 +130,9 @@ const fold = (el: HTMLElement, height: number) => {
         const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
         const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
         pres.forEach(pre => {
-            foldBtnEvent({pre, foldBtn, iconElement, maskElement}, height);
-        })
-    }
+            foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
+        });
+    };
 };
 
 /**
@@ -130,7 +146,7 @@ const foldBtnEvent = (els: {
     iconElement: HTMLElement,
     maskElement: HTMLElement
 }, height: number) => {
-    const {pre, foldBtn, iconElement, maskElement} = els;
+    const { pre, foldBtn, iconElement, maskElement } = els;
     if (pre!.classList.contains('expand')) { // 折叠
         const oldPos = foldBtn.getBoundingClientRect().top;
         pre!.style.height = height + 'px';
@@ -161,11 +177,11 @@ const rebindListener = (height: number) => {
                 const pre = el.querySelector('pre') as HTMLElement;
                 const maskElement = el.querySelector('.codeblocks-mask') as HTMLElement;
                 const iconElement = el.querySelector('.fold-btn-icon') as HTMLElement;
-                foldBtnEvent({pre, foldBtn, iconElement, maskElement}, height);
-            }
+                foldBtnEvent({ pre, foldBtn, iconElement, maskElement }, height);
+            };
         }
-    })
-}
+    });
+};
 
 function isRGBA(value: string) {
     // 使用正则表达式匹配 RGBA 值的模式
@@ -184,11 +200,11 @@ const themeChangeObserver = () => {
                 hideMask();
             }
         });
-    })
-    themeChangeObserve.observe(document.querySelector('html')!, {
-        attributeFilter: ['class']
     });
-}
+    themeChangeObserve.observe(document.querySelector('html')!, {
+        attributeFilter: [ 'class' ]
+    });
+};
 
 const hideMask = () => {
     if (document.querySelector('.vp-doc [class*="language-"]')) {
@@ -199,17 +215,17 @@ const hideMask = () => {
                 document.querySelectorAll('.codeblocks-mask').forEach(item => {
                     // console.log(`display`);
                     (item as HTMLElement).style.display = 'none';
-                })
-            }).then()
+                });
+            }).then();
         } else {
             nextTick(() => {
                 document.querySelectorAll('.codeblocks-mask').forEach(item => {
                     (item as HTMLElement).style.display = '';
-                })
-            }).then()
+                });
+            }).then();
         }
     }
-}
+};
 
 /**
  * Set codeblocks folding.  设置代码块折叠
@@ -219,7 +235,7 @@ const hideMask = () => {
  */
 const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = true, height: number = 400) => {
     // console.log(`初始化`)
-    const {frontmatter, route} = vitepressObj;
+    const { frontmatter, route } = vitepressObj;
     onMounted(() => {
         // console.log('onMounted...')
         cbf(frontmatter, defaultAllFold, height);
