@@ -1,5 +1,10 @@
 import { nextTick, Ref, watch } from 'vue';
-import { PageData, useData, useRoute } from 'vitepress';
+import { PageData, Route } from 'vitepress';
+
+type vitepressAPI = {
+    frontmatter: Ref<PageData['frontmatter']>,
+    route: Route
+}
 
 let themeChangeObserve: any = null;
 
@@ -236,15 +241,12 @@ const jumpHashLink = () => {
 
 /**
  * Set codeblocks folding.  设置代码块折叠
- * @param [_] 忽略
+ * @param {vitepressAPI} vitepressObj route and frontmatter.  路由与前言
  * @param [defaultAllFold] Collapse all by default?  默认全部折叠？
  * @param [height] The height of the folded codeblocks（default 400px）.  折叠后的代码块高度（默认 400px）
  */
-const codeblocksFold = (_?: any, defaultAllFold: boolean = true, height: number = 400) => {
-    // 获取前言和路由
-    const { frontmatter } = useData();
-    const route = useRoute();
-
+const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = true, height: number = 400) => {
+    const { frontmatter, route } = vitepressObj;
     watch(() => route.path, () => {
         nextTick(() => {
             cbf(frontmatter, defaultAllFold, height);

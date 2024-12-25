@@ -43,6 +43,7 @@ yarn add vitepress-plugin-codeblocks-fold
 
 ```js
 import DefaultTheme from 'vitepress/theme';
+import { useData, useRoute } from 'vitepress';
 import codeblocksFold from 'vitepress-plugin-codeblocks-fold'; // 导入方法
 import 'vitepress-plugin-codeblocks-fold/style/index.css'; // 导入样式
 
@@ -57,18 +58,18 @@ export default {
         const { frontmatter } = useData();
         const route = useRoute();
         // 基础使用
-        codeblocksFold();
+        codeblocksFold({ route, frontmatter });
         // 可配置参数
-        // codeblocksFold({}, true, 400);
+        // codeblocksFold({ route, frontmatter }, true, 400);
     }
 };
 ```
 
 `codeblocksFold()` 接收三个参数：
 
-- ~~vitepressObj~~
+- vitepressObj
 
-  ~~这是一个对象，对象里面必须有两个值：路由和前言。~~ （该参数已废弃）
+  这是一个对象，对象里面必须有两个值：路由和前言。
 
 - defaultAllFold
 

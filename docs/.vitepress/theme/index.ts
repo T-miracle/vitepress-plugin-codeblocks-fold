@@ -9,6 +9,9 @@ export default {
         DefaultTheme.enhanceApp(ctx);
     },
     setup() {
-        codeblocksFold()
+        // 获取前言和路由
+        const { frontmatter } = useData();
+        const route = useRoute();
+        codeblocksFold({route, frontmatter})
     }
 };
