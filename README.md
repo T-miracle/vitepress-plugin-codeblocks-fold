@@ -41,10 +41,10 @@ yarn add vitepress-plugin-codeblocks-fold
 
 ## Use
 
+Use in `.vitepress/theme/index.js`
+
 ```js
-// .vitepress/theme/index.js
 import DefaultTheme from 'vitepress/theme';
-import { useData, useRoute } from 'vitepress';
 import codeblocksFold from 'vitepress-plugin-codeblocks-fold'; // import method
 import 'vitepress-plugin-codeblocks-fold/style/index.css'; // import style
 
@@ -55,20 +55,19 @@ export default {
         // ...
     },
     setup() {
-        // get frontmatter and route
-        const { frontmatter } = useData();
-        const route = useRoute();
         // basic use
-        codeblocksFold({ route, frontmatter }, true, 400);
+        codeblocksFold();
+        // configurable parameters
+        // codeblocksFold({}, true, 400);
     }
 };
 ```
 
 `codeblocksFold()` takes three parameters：
 
-- vitepressObj
+- ~~vitepressObj~~
 
-  This is an object, there must be two values in the object: `route` and `frontmatter`。
+  ~~This is an object, there must be two values in the object: `route` and `frontmatter`。~~ (this parameter is deprecated)
 
 - defaultAllFold
 
