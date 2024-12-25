@@ -1,4 +1,4 @@
-import { nextTick, Ref, watch } from 'vue';
+import { nextTick, onMounted, Ref, watch } from 'vue';
 import { PageData, Route } from 'vitepress';
 
 type vitepressAPI = {
@@ -247,12 +247,20 @@ const jumpHashLink = () => {
  */
 const codeblocksFold = (vitepressObj: vitepressAPI, defaultAllFold: boolean = true, height: number = 400) => {
     const { frontmatter, route } = vitepressObj;
+
+    onMounted(() => {
+        nextTick(() => {
+            cbf(frontmatter, defaultAllFold, height);
+            rebindListener(height);
+        }).catch();
+    })
+
     watch(() => route.path, () => {
         nextTick(() => {
             cbf(frontmatter, defaultAllFold, height);
             rebindListener(height);
         }).catch();
-    }, { immediate: true });
+    });
 };
 
 export default codeblocksFold;
